@@ -128,4 +128,4 @@ async def leaderboard(ctx):
 client.add_cog(bot(client))
 
 
-client.run('Mjc3NTg4NTgzNjkzNjgwNjQw.WJZqgw.AF6jBr9PJ0_WJ0FZdGgMFwlX0UU')
+client.run('token')
