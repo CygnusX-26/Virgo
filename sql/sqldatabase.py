@@ -12,10 +12,10 @@ c = conn.cursor()
 
 #c.execute("INSERT INTO users VALUES (221731072822607872, 733554822480920596, 0)")
 
-c.execute("SELECT * FROM users WHERE id=221731072822607872")
+#c.execute("SELECT * FROM users WHERE id=221731072822607872")
 
 #many, all
-print(c.fetchone())
+#print(c.fetchone())
 
 
 conn.commit()

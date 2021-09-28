@@ -1,6 +1,9 @@
 import discord
 from discord.ext import commands
+from discord import Colour
 import sqlite3
+import os
+from cogs.bot import bot
 
 conn = sqlite3.connect('users.db')
 
@@ -10,6 +13,8 @@ intents  = discord.Intents.all()
 client = commands.Bot(command_prefix = '-', intents=intents)
 client.remove_command('help')
 
+
+#creates a new user table if one doesn't currently exist
 try:
     c.execute("""CREATE TABLE users (
             id integer,
@@ -20,9 +25,14 @@ try:
 except:
     pass
 
+# methods for sqlite
 def getUser(id, guild):
     c.execute(f"SELECT * FROM users WHERE id = {id} AND guild = {guild}")
     return c.fetchone()
+
+def getExp(id, guild):
+    c.execute(f"SELECT * FROM users WHERE id = {id} AND guild = {guild}")
+    return c.fetchone()[2]
 
 def insertUser(id, guild):
     with conn:
@@ -48,15 +58,14 @@ def removeUser(id, guild):
     with conn:
         c.execute(f"DELETE from users WHERE id = {id} AND guild = {guild}")
 
-
-
-@client.event
-async def on_ready():
-    print('This bot is online!')
+def getSecond(list):
+    return list[1]
 
 @client.event
 async def on_message(message):
     user = message.author.id
+    if message.content.startswith('-'):
+        await client.process_commands(message)
     if message.author.bot:
         return
     guild = message.guild.id
@@ -65,8 +74,7 @@ async def on_message(message):
     if len(check) == 0:
         insertUser(user, guild)
         return
-    #either creates new, or updates
-    for i in range(len(check)):
+    for i in range(len(check)): #either creates new, or updates
         if user in check[i] and guild in check[i]:
             updateExp(user, guild)
             c.execute(f"SELECT * FROM users WHERE id = {user} AND guild = {guild}")
@@ -77,18 +85,47 @@ async def on_message(message):
             if lvl_start < lvl_end:
                 updateLevel(user, guild)
                 await message.channel.send(f'{message.author.mention} has leveled up to {lvl_end}')
-            c.execute(f"SELECT * FROM users")
-            print(c.fetchall())
+            #c.execute(f"SELECT * FROM users")
+            #print(c.fetchall())
             return   
     insertUser(user, guild)
-    c.execute(f"SELECT * FROM users")
-    print(c.fetchall())
+    #c.execute(f"SELECT * FROM users")
+    #print(c.fetchall())
+
+#commands
+
+@client.command(aliases = ['lb'])
+async def leaderboard(ctx):
+    guild = ctx.guild.id
+    explist = []
+    c.execute(f"SELECT * FROM users WHERE guild = {guild}")
+    check = c.fetchall()
+    for i in check:
+        explist.append([i[0], i[2], i[3]])
+    explist.sort(key=getSecond, reverse=True)
+    embed = discord.Embed(
+        title=f'Leaderboard for {ctx.guild}',
+        colour=Colour.green()
+    )
+    embed.set_thumbnail(url=f'{ctx.guild.icon_url}')
+    if len(explist) > 5:
+        count = 0
+        for i in explist:
+            if count <= 5:
+                user = await client.fetch_user(i[0])
+                embed.add_field(name=f'{user} level: {i[2]}', value=f'{i[1]}', inline=False)
+                count += count
+            else:
+                break
+    else:
+        for i in explist:
+            user = await client.fetch_user(i[0])
+            embed.add_field(name=f'{user} level: {i[2]}', value=f'{i[1]}', inline=False)
+    
+    await ctx.send(embed=embed)
+
+    
+client.add_cog(bot(client))
 
 
-
-@client.command()
-async def ping(ctx):
-    ctx.send('pong')
-
-
-client.run('token')
+client.run('Mjc3NTg4NTgzNjkzNjgwNjQw.WJZqgw.AF6jBr9PJ0_WJ0FZdGgMFwlX0UU')
