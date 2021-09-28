@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from discord import Colour
 import sqlite3
-import os
 from cogs.bot import bot
 
 conn = sqlite3.connect('users.db')
@@ -128,4 +127,4 @@ async def leaderboard(ctx):
 client.add_cog(bot(client))
 
 
-client.run('token')
+client.run('Mjc3NTg4NTgzNjkzNjgwNjQw.WJZqgw.0JR-C4mtlBxyeMWxoYlt4cpYdFQ')
