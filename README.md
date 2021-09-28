@@ -1,4 +1,4 @@
-# Virgo2
+# Virgo
 
 ## General info
 
