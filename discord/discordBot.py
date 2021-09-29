@@ -6,6 +6,7 @@ import sqlite3
 from cogs.bot import bot
 from cogs.secret import token_
 from cogs.level import Level
+from cogs.leaderboard import Leaderboard
 
 conn = sqlite3.connect('users.db')
 
@@ -96,39 +97,40 @@ async def on_message(message):
 
 #commands
 
-@client.command(aliases = ['lb'])
-async def leaderboard(ctx):
-    guild = ctx.guild.id
-    explist = []
-    c.execute(f"SELECT * FROM users WHERE guild = {guild}")
-    check = c.fetchall()
-    for i in check:
-        explist.append([i[0], i[2], i[3]])
-    explist.sort(key=getSecond, reverse=True)
-    embed = discord.Embed(
-        title=f'Leaderboard for {ctx.guild}',
-        color=3553599
-    )
-    embed.set_thumbnail(url=f'{ctx.guild.icon_url}')
-    if len(explist) > 5:
-        count = 0
-        for i in explist:
-            if count <= 5:
-                user = await client.fetch_user(i[0])
-                embed.add_field(name=f'{user} ▹ level: {i[2]}', value=f'{i[1]}', inline=False)
-                count += count
-            else:
-                break
-    else:
-        for i in explist:
-            user = await client.fetch_user(i[0])
-            embed.add_field(name=f'{user} ▹ level: {i[2]}', value=f'{i[1]}', inline=False)
+# @client.command(aliases = ['lb'])
+# async def leaderboard(ctx):
+#     guild = ctx.guild.id
+#     explist = []
+#     c.execute(f"SELECT * FROM users WHERE guild = {guild}")
+#     check = c.fetchall()
+#     for i in check:
+#         explist.append([i[0], i[2], i[3]])
+#     explist.sort(key=getSecond, reverse=True)
+#     embed = discord.Embed(
+#         title=f'Leaderboard for {ctx.guild}',
+#         color=3553599
+#     )
+#     embed.set_thumbnail(url=f'{ctx.guild.icon_url}')
+#     if len(explist) > 5:
+#         count = 0
+#         for i in explist:
+#             if count <= 5:
+#                 user = await client.fetch_user(i[0])
+#                 embed.add_field(name=f'{user} ▹ level: {i[2]}', value=f'{i[1]}', inline=False)
+#                 count += count
+#             else:
+#                 break
+#     else:
+#         for i in explist:
+#             user = await client.fetch_user(i[0])
+#             embed.add_field(name=f'{user} ▹ level: {i[2]}', value=f'{i[1]}', inline=False)
     
-    await ctx.send(embed=embed)
+#     await ctx.send(embed=embed)
 
     
 client.add_cog(bot(client))
 client.add_cog(Level(client))
+client.add_cog(Leaderboard(client))
 
 
 client.run(token_.getToken())
