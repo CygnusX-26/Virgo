@@ -82,7 +82,7 @@ async def on_message(message):
             exp = c.fetchone()[2]
             c.execute(f"SELECT * FROM users WHERE id = {user} AND guild = {guild}")
             lvl_start = c.fetchone()[3]
-            lvl_end = int(exp ** (1/4))
+            lvl_end = int(exp ** (1/5))
             if lvl_start < lvl_end:
                 updateLevel(user, guild)
                 await message.channel.send(f'{message.author.mention} has leveled up to {lvl_end}')
