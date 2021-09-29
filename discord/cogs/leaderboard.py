@@ -4,9 +4,10 @@ import sqlite3
 
 conn = sqlite3.connect('users.db')
 c = conn.cursor()
+
 def getSecond(list):
     return list[1]
-    
+
 class Leaderboard(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
