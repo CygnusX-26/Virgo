@@ -20,8 +20,8 @@ class bot(commands.Cog):
             descriprion='List of commands for Virgo',
             colour=discord.Colour.green()
         )
-        embed.add_field(name='Help', value='displays this menu!', inline=False)
-        embed.add_field(name='Leaderboard', value='displays the guild leaderboard', inline=False)
+        embed.add_field(name='Help ', value='▹ displays this menu!', inline=False)
+        embed.add_field(name='Leaderboard', value='▹ displays the guild leaderboard', inline=False)
 
         await ctx.send(embed=embed)
 

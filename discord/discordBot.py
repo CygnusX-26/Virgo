@@ -5,6 +5,7 @@ from discord import Colour
 import sqlite3
 from cogs.bot import bot
 from cogs.secret import token_
+from cogs.level import Level
 
 conn = sqlite3.connect('users.db')
 
@@ -114,19 +115,20 @@ async def leaderboard(ctx):
         for i in explist:
             if count <= 5:
                 user = await client.fetch_user(i[0])
-                embed.add_field(name=f'{user} level: {i[2]}', value=f'{i[1]}', inline=False)
+                embed.add_field(name=f'{user} ▹ level: {i[2]}', value=f'{i[1]}', inline=False)
                 count += count
             else:
                 break
     else:
         for i in explist:
             user = await client.fetch_user(i[0])
-            embed.add_field(name=f'{user} level: {i[2]}', value=f'{i[1]}', inline=False)
+            embed.add_field(name=f'{user} ▹ level: {i[2]}', value=f'{i[1]}', inline=False)
     
     await ctx.send(embed=embed)
 
     
 client.add_cog(bot(client))
+client.add_cog(Level(client))
 
 
 client.run(token_.getToken())
