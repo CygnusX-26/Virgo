@@ -3,6 +3,7 @@ __pycache__/
 
 #token
 secret.py
+__pycache__
 
 #database
 users.db

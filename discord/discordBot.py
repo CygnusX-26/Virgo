@@ -1,9 +1,10 @@
 import discord
+from discord import colour
 from discord.ext import commands
 from discord import Colour
 import sqlite3
 from cogs.bot import bot
-from secret import token_
+from cogs.secret import token_
 
 conn = sqlite3.connect('users.db')
 
@@ -105,7 +106,7 @@ async def leaderboard(ctx):
     explist.sort(key=getSecond, reverse=True)
     embed = discord.Embed(
         title=f'Leaderboard for {ctx.guild}',
-        colour=Colour.green()
+        color=3553599
     )
     embed.set_thumbnail(url=f'{ctx.guild.icon_url}')
     if len(explist) > 5:
