@@ -5,9 +5,11 @@ A simple levelling discord bot that uses sqlite3 to store data.
 ## Installations
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install discord.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install buttons.
 
 ```bash
 pip install discord
+pip install discord_buttons_plugin
 ```
 
 ## Usage
