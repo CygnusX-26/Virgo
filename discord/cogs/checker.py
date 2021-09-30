@@ -1,9 +1,11 @@
 import discord
 from discord.ext import commands
 import sqlite3
+from discord_buttons_plugin import *
 
 conn = sqlite3.connect('users.db')
 c = conn.cursor()
+
 
 #methods for sql
 def getUser(id, guild):
@@ -44,6 +46,7 @@ def getSecond(list):
 class Checker(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.buttons = ButtonsClient(bot)
     
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -66,6 +69,16 @@ class Checker(commands.Cog):
                 lvl_end = int(exp ** (1/5))
                 if lvl_start < lvl_end:
                     updateLevel(user, guild)
-                    await message.channel.send(f'{message.author.mention} has leveled up to {lvl_end}')
+                    await self.buttons.send(
+	                    content = f'{message.author.mention} has leveled up to level {lvl_end}', 
+	                    channel = message.channel.id,
+	                    components = [
+		                ActionRow([
+			                Button(
+                                emoji = {"id": '893012283930861568', "name": None, "animated": False},
+				                label="Close", 
+				                style=ButtonType().Danger,
+				                custom_id="close_button"
+                                )])])
                 return   
         insertUser(user, guild)

@@ -19,6 +19,7 @@ class Level(commands.Cog):
             title=f'Stats for {ctx.author.name}',
             colour= 3553599
         )
+        embed.set_thumbnail(url=ctx.author.avatar_url)
         embed.add_field(name=f'Level ▹ {check[3]}', value='\u200b', inline=False)
         embed.add_field(name=f'Total Experience ▹ {check[2]}', value='\u200b', inline=False)
         await ctx.send(embed=embed)
