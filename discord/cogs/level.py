@@ -23,7 +23,7 @@ class Level(commands.Cog):
         if check[3] == 0 or check[2] == 0:
             green = 0
         else:
-            green = (check[2]/(check[3]+1)**5)*10
+            green = ((check[2]-(check[3]-1)**5)/((check[3]+1)**5-(check[3]-1)**5))*10
         for i in range(10):
             if (i+1 < green):
                 bar += "🟩"
