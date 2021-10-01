@@ -24,6 +24,7 @@ class bot(commands.Cog):
         )
         embed.add_field(name='Help ', value='▹ displays this menu!', inline=False)
         embed.add_field(name='Leaderboard', value='▹ displays the guild leaderboard', inline=False)
+        embed.add_field(name='Level', value='▹ displays current experience and level', inline=False)
         await self.buttons.send(
 	        embed = embed, 
 	        channel = ctx.channel.id,
