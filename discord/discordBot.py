@@ -34,6 +34,10 @@ async def close_button(ctx):
     await ctx.reply(content='Message removed',flags=MessageFlags().EPHEMERAL)
     await ctx.message.delete()
 
+@buttons.click
+async def close_button1(ctx):
+    await ctx.message.delete()
+
 client.add_cog(bot(client))
 client.add_cog(Level(client))
 client.add_cog(Leaderboard(client))

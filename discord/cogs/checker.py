@@ -78,7 +78,7 @@ class Checker(commands.Cog):
                                 emoji = {"id": '893012283930861568', "name": None, "animated": False},
 				                label="Close", 
 				                style=ButtonType().Danger,
-				                custom_id="close_button"
+				                custom_id="close_button1"
                                 )])])
                 return   
         insertUser(user, guild)
